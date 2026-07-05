@@ -1,0 +1,2 @@
+# Ignorar pastas node_modules em qualquer nível de subdiretório
+node_modules/

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <input type="text" id="input-email" placeholder="Digite o email">
+        <input type="text" id="input-senha" placeholder="Digite a senha">
+        <button id="btn-enviar">Enviar</button>
+    </div>
+    <div id="mensagem-login"></div>
+    <script>
+        const email = document.getElementById("input-email");
+        const senha = document.getElementById("input-senha");
+        const msgLogin = document.getElementById("mensagem-login");
+        const btnEnviar = document.getElementById("btn-enviar");
+
+        btnEnviar.onclick = async () => {
+            const formLogin = {
+                email: email.value,
+                senha: senha.value
+            };
+
+            const formLoginJson = JSON.stringify(formLogin)
+
+            const resposta = await fetch(`/login`, {
+                method: 'post',
+                headers: {
+                    "Content-Type": 'application/json'
+                },
+                body: formLoginJson
+            });
+            const respostaJson = await resposta.json();
+
+            respostaJson.success === true && alert("Login realizado com sucesso!");
+            respostaJson.success === false && alert("Email ou senha incorretos!");
+
+            // fetch(`/login/${email.value}/${senha.value}`).then(response => {
+            //     response.json().then(sucesso => {
+            //         sucesso.success === true && alert("Login realizado com sucesso!");
+            //         sucesso.success === false && alert("Email ou senha incorretos!");
+            //     });
+            // });
+        };
+
+
+        // function mostraLogin() {
+        //     fetch('/mostra-frase').then(response => {
+        //         response.json().then(fraseJson => {
+        //             fraseAtual.innerHTML = fraseJson.frase
+        //         });
+        //     });
+        // };
+
+        // window.onload = mostraLogin();
+    </script>
+</body>
+</html>
